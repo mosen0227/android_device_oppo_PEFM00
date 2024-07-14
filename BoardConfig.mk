@@ -103,7 +103,6 @@ TW_USE_TOOLBOX := true
 
 # Crypto
 TW_INCLUDE_CRYPTO := true
-TARGET_HW_DISK_ENCRYPTION := true
 TW_INCLUDE_CRYPTO_FBE := true
 
 # Debug
