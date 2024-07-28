@@ -123,9 +123,15 @@ on property:sys.usb.config=fastboot && property:sys.usb.ffs.ready=1 && property:
 
 #Add for OPPO FBE
 service hal_cryptoeng_oppo /vendor/bin/vendor.oppo.hardware.cryptoeng@1.0-service
+    disabled
+    user root
+    group root drmrpc
     seclabel u:r:recovery:s0
 
 service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.trustonic
+    disabled
+    user root
+    group root drmrpc
     seclabel u:r:recovery:s0
 
 
@@ -147,21 +153,37 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
     -r /vendor/app/mcRegistry/9073f03a9618383bb1856eb3f990babd.drbin
     seclabel u:r:recovery:s0
 
-#Add By Momo5418 FBE Fixed
-on property:hwservicemanager.ready=true
-    start keymaster-4-0
+#Add By Momo5418 FBE Fixed Patch 2
+
+on property:crypto.ready=1
     start hal_cryptoeng_oppo
+    start keymaster-4-0
+    start gatekeeper-1-0
+
+on property:crypto.ready=0
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
-    stop hal_cryptoeng_oppo
     stop mobicore
     stop servicemanager
     stop hwservicemanager
     stop keymaster-4-0
+    stop gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
-    stop hal_cryptoeng_oppo
     stop mobicore
     stop servicemanager
     stop hwservicemanager
     stop keymaster-4-0
+    stop gatekeeper-1-0
+
+on property:twrp.decrypt.done=true && property:twrp.all.users.decrypted=true
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
