@@ -155,35 +155,35 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
 
 #Add By Momo5418 FBE Fixed Patch 2
 
-#on property:crypto.ready=1
-#    start hal_cryptoeng_oppo
-#    start keymaster-4-0
-#    start gatekeeper-1-0
-#
-#on property:crypto.ready=0
-#    stop mobicore
-#    stop servicemanager
-#    stop hwservicemanager
-#    stop keymaster-4-0
-#    stop gatekeeper-1-0
-#
-#on property:ro.crypto.state=unsupported
-#    stop mobicore
-#    stop servicemanager
-#    stop hwservicemanager
-#    stop keymaster-4-0
-#    stop gatekeeper-1-0
-#
-#on property:ro.crypto.state=unencrypted
-#    stop mobicore
-#    stop servicemanager
-#    stop hwservicemanager
-#    stop keymaster-4-0
-#    stop gatekeeper-1-0
-#
-#on property:twrp.decrypt.done=true && property:twrp.all.users.decrypted=true
-#    stop mobicore
-#    stop servicemanager
-#    stop hwservicemanager
-#    stop keymaster-4-0
-#    stop gatekeeper-1-0
+on property:crypto.ready=1
+    start hal_cryptoeng_oppo
+    start keymaster-4-0
+    start gatekeeper-1-0
+
+on property:crypto.ready=0
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+
+on property:ro.crypto.state=unsupported
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+
+on property:ro.crypto.state=unencrypted
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+
+on property:twrp.decrypt.done=true && property:twrp.all.users.decrypted=true
+    stop mobicore
+    stop servicemanager
+    stop hwservicemanager
+    stop keymaster-4-0
+    stop gatekeeper-1-0
